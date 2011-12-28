@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version     = "0.0.1"
   s.authors     = ["Andriy Yanko"]
   s.email       = ["andriy.yanko@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/railsware/rspec-example_steps"
   s.summary     = %q{Given/When/Then steps for RSpec examples}
 
   s.rubyforge_project = "rspec_example_steps"
