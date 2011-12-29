@@ -32,7 +32,85 @@ Given/When/Then steps for RSpec examples
         When I search something
         Then I should see result
 
-## References
+
+### Shared steps
+
+Use _shared_steps_ do define block that will be evaluated in the context of example using _include_steps_.
+
+Shared _steps_ behavior is simular to shared _example_ but context is example nor example_group.
+
+### Example with shared steps
+
+    shared_steps "login" do
+      When "I go to login page" do
+        page.visit '/login'
+      end
+      When "I put credentials" do
+        page.fill_in 'Login', :with => 'jack@example.com'
+        page.fill_in 'Password', :with => 'password''
+      end
+      Then "I should be logged in" do
+        page.status_code.should == 200
+        page.should have_content("Welcome jack@example.com")
+      end
+    end
+
+    shared_steps "logout" do
+      page.visit '/logout'
+      page.status_code.should == 200
+    end
+
+    context "user flow"
+      Steps "User updates profile description" do
+        include_steps "login"
+        When "I update profile description" do
+          ...
+        end
+        include_steps "logout"
+      end
+
+      Steps "User updates profile avatar" do
+        include_steps "login"
+        When "I update profile avatar" do
+          ...
+        end
+        include_steps "logout"
+      end
+    end
+
+### Passing arguments to shared steps
+
+It's possible to customize shared steps. See example
+
+### Example with shared steps with arguments
+
+    shared_steps "login" do |email, password|
+      When "I go to login page" do
+        page.visit '/login'
+      end
+      When "I put credentials" do
+        page.fill_in 'Login', :with => email
+        page.fill_in 'Password', :with => password
+      end
+    end
+
+    shared_steps "invalid login" do
+      Then "I should see login error" do
+      ...
+      end
+    end
+
+    Steps "User provides wrong email" do
+      include_steps "login", 'jack', 'qwerty'
+      include_steps "invalid login"
+    end
+
+    Steps "User provides wrong password" do
+      include_steps "login", 'jack@example.com', 'bla'
+      include_steps "invalid login"
+    end
+
+## Alternatives
 
 * [rspec-steps](https://github.com/LRDesign/rspec-steps)
 * [rspec-given](https://github.com/jimweirich/rspec-given)
