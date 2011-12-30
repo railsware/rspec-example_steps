@@ -17,9 +17,19 @@ describe "example steps" do
         @result = "Then value"
       end
 
+      And "and" do
+        @and = "And value"
+      end
+
+      But "but" do
+        @but = "But value"
+      end
+
       @thing.should  == "Given value"
       @action.should == "When value"
       @result.should == "Then value"
+      @and.should == "And value"
+      @but.should == "But value"
     end
   end
 
@@ -43,6 +53,14 @@ describe "example steps" do
       end
 
       Then "then step with :pending option", :pending => true do
+        raise "Should not be evaluated"
+      end
+
+      And "and step with :pending option", :pending => true do
+        raise "Should not be evaluated"
+      end
+
+      But "and step with :pending option", :pending => true do
         raise "Should not be evaluated"
       end
     end
@@ -69,6 +87,12 @@ describe "example steps" do
       end
 
       Then "then step with :pending option", :pending => false do
+      end
+
+      And "and step with :pending option", :pending => false do
+      end
+
+      But "and step with :pending option", :pending => false do
       end
     end
   end

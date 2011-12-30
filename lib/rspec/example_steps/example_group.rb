@@ -38,6 +38,25 @@ module RSpec
         end
       end
 
+      def And(message, options = {})
+        RSpec.world.reporter.example_step_started(self, :and, message, options)
+        if block_given? && !options[:pending]
+          yield
+          RSpec.world.reporter.example_step_passed(self, :and, message, options)
+        else
+          RSpec.world.reporter.example_step_pending(self, :and, message, options)
+        end
+      end
+
+      def But(message, options = {})
+        RSpec.world.reporter.example_step_started(self, :but, message, options)
+        if block_given? && !options[:pending]
+          yield
+          RSpec.world.reporter.example_step_passed(self, :but, message, options)
+        else
+          RSpec.world.reporter.example_step_pending(self, :but, message, options)
+        end
+      end
     end
   end
 end

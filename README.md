@@ -1,6 +1,6 @@
 ## RSpec example steps
 
-Given/When/Then steps for RSpec examples
+Given/When/Then/And/But steps for RSpec examples
 
 ### Example
 
