@@ -8,23 +8,36 @@ module RSpec
         instance_eval_with_args(*args, &shared_block)
       end
 
-      def Given(message)
-        RSpec.world.reporter.example_step_started(self, :given, message)
-        yield
-        RSpec.world.reporter.example_step_passed(self, :given, message)
+      def Given(message, options = {})
+        RSpec.world.reporter.example_step_started(self, :given, message, options)
+        if block_given? && !options[:pending]
+          yield
+          RSpec.world.reporter.example_step_passed(self, :given, message, options)
+        else
+          RSpec.world.reporter.example_step_pending(self, :given, message, options)
+        end
       end
 
-      def When(message)
-        RSpec.world.reporter.example_step_started(self, :when, message)
-        yield
-        RSpec.world.reporter.example_step_passed(self, :when, message)
+      def When(message, options = {})
+        RSpec.world.reporter.example_step_started(self, :when, message, options)
+        if block_given? && !options[:pending]
+          yield
+          RSpec.world.reporter.example_step_passed(self, :when, message, options)
+        else
+          RSpec.world.reporter.example_step_pending(self, :when, message, options)
+        end
       end
 
-      def Then(message)
-        RSpec.world.reporter.example_step_started(self, :then, message)
-        yield
-        RSpec.world.reporter.example_step_passed(self, :then, message)
+      def Then(message, options = {})
+        RSpec.world.reporter.example_step_started(self, :then, message, options)
+        if block_given? && !options[:pending]
+          yield
+          RSpec.world.reporter.example_step_passed(self, :then, message, options)
+        else
+          RSpec.world.reporter.example_step_pending(self, :then, message, options)
+        end
       end
+
     end
   end
 end

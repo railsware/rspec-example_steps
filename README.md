@@ -110,6 +110,26 @@ It's possible to customize shared steps. See example
       include_steps "invalid login"
     end
 
+
+### Pending steps
+
+Simular to Example :pending behavior:
+
+    Steps "User login" do
+      # just skip block
+      When "I go to login"
+
+      # pass :pending => true option
+      Then "I should see welcome", :pending => true do
+	...
+      end
+
+      # pass :pending => "some pending message"
+      Then "I should see last login IP", :pending => "WIP" do
+	...
+      end
+    end
+
 ## Alternatives
 
 * [rspec-steps](https://github.com/LRDesign/rspec-steps)
