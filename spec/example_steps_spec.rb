@@ -113,7 +113,7 @@ describe "example steps" do
 
     Steps "When fails" do
       When "action" do
-        2*2.should == 5
+        (2*2).should == 5
       end
 
       Then "I should see error" do
