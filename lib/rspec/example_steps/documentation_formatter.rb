@@ -43,6 +43,11 @@ module RSpec
 
           output.puts yellow(full_message)
         end
+
+        def example_step_failed(example_group, type, message, options)
+          full_message = "#{current_indentation}  #{type.to_s.capitalize} #{message} (FAILED)"
+          output.puts red(full_message)
+        end
       end
     end
   end

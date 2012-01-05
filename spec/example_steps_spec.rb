@@ -96,4 +96,38 @@ describe "example steps" do
       end
     end
   end
+
+
+
+  describe "Failed steps" do
+
+    Steps "Given fails" do
+      Given "thing" do
+        1/0
+      end
+
+      Then "I should see error" do
+      end
+    end
+
+
+    Steps "When fails" do
+      When "action" do
+        2*2.should == 5
+      end
+
+      Then "I should see error" do
+      end
+    end
+
+    Steps "Then fails" do
+      Then "result" do
+        raise Exception
+      end
+
+      Then "I should see error" do
+      end
+    end
+
+  end
 end
