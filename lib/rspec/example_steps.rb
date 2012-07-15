@@ -16,7 +16,7 @@ RSpec::Core::ExampleGroup.send                       :include, RSpec::ExampleSte
 RSpec::Core::Reporter.send                           :include, RSpec::ExampleSteps::Reporter
 RSpec::Core::World.send                              :include, RSpec::ExampleSteps::World
 
-RSpec::Core::ExampleGroup.define_example_method :Steps, :with_steps => true
+RSpec::Core::ExampleGroup.singleton_class.define_example_method :Steps, :with_steps => true
 
 require 'rspec/example_steps/shared_steps'
 include RSpec::ExampleSteps::SharedSteps
