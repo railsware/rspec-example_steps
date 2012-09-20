@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "rspec-example_steps"
-  s.version     = "0.2.0"
+  s.version     = "0.2.1"
   s.authors     = ["Andriy Yanko"]
   s.email       = ["andriy.yanko@gmail.com"]
   s.homepage    = "https://github.com/railsware/rspec-example_steps"
