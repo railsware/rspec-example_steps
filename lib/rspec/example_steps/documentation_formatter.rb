@@ -19,7 +19,11 @@ module RSpec
 
           if example.options[:with_steps]
             full_message = "#{current_indentation}#{example.description}"
-            output.puts default_color(full_message)
+            if respond_to?(:default_color)
+              output.puts default_color(full_message)
+            else
+              output.puts white(full_message)
+            end
           end
         end
 
@@ -29,7 +33,11 @@ module RSpec
 
         def example_step_passed(example_group, type, message, options)
           full_message = "#{current_indentation}  #{type.to_s.capitalize} #{message}"
-          output.puts success_color(full_message)
+          if respond_to?(:success_color)
+            output.puts success_color(full_message)
+          else
+            output.puts green(full_message)
+          end
         end
 
         def example_step_pending(example_group, type, message, options)
@@ -41,12 +49,20 @@ module RSpec
             full_message << " (PENDING)"
           end
 
-          output.puts yellow(full_message)
+          if respond_to?(:pending_color)
+            output.puts pending_color(full_message)
+          else
+            output.puts yellow(full_message)
+          end
         end
 
         def example_step_failed(example_group, type, message, options)
           full_message = "#{current_indentation}  #{type.to_s.capitalize} #{message} (FAILED)"
-          output.puts failure_color(full_message)
+          if respond_to?(:failure_color)
+            output.puts failure_color(full_message)
+          else
+            output.puts red(full_message)
+          end
         end
       end
     end
