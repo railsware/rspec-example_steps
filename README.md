@@ -130,6 +130,11 @@ Simular to Example :pending behavior:
       end
     end
 
+## License
+
+* Copyright (c) 2013 Railsware [www.railsware.com](http://www.railsware.com)
+* [MIT](www.opensource.org/licenses/MIT)
+
 ## Alternatives
 
 * [rspec-steps](https://github.com/LRDesign/rspec-steps)
