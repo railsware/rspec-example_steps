@@ -16,6 +16,20 @@ RSpec::Core::ExampleGroup.send                       :include, RSpec::ExampleSte
 RSpec::Core::Reporter.send                           :include, RSpec::ExampleSteps::Reporter
 RSpec::Core::World.send                              :include, RSpec::ExampleSteps::World
 
+
+# Taken from Ruby On Rails:
+# https://raw.github.com/rails/rails/3-0-stable/activesupport/lib/active_support/core_ext/kernel/singleton_class.rb
+module Kernel
+  # Returns the object's singleton class.
+  def singleton_class
+    class << self
+      self
+    end
+  end unless respond_to?(:singleton_class) # exists in 1.9.2
+
+end
+
+
 if RSpec::Core::ExampleGroup.singleton_class.respond_to?(:define_example_method)
   RSpec::Core::ExampleGroup.singleton_class.define_example_method :Steps, :with_steps => true
 else
