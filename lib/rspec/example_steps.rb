@@ -17,7 +17,7 @@ RSpec::Core::ExampleGroup.send                       :include, RSpec::ExampleSte
 RSpec::Core::Reporter.send                           :include, RSpec::ExampleSteps::Reporter
 RSpec::Core::World.send                              :include, RSpec::ExampleSteps::World
 
-if RSpec::Core::ExampleGroup.singleton_class.respond_to?(:define_example_method)
+if RSpec::Core::ExampleGroup.singleton_class.respond_to?(:define_example_method, true)
   RSpec::Core::ExampleGroup.singleton_class.define_example_method :Steps, :with_steps => true
 else
   RSpec::Core::ExampleGroup.define_example_method :Steps, :with_steps => true
