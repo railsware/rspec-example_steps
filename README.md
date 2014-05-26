@@ -2,6 +2,13 @@
 
 Given/When/Then/And/But steps for RSpec examples
 
+### Installation
+
+* For rspec v2 use gem v0.2.x or branch rspec2
+* For rspec v3 user gem v3.x.x or master
+
+    gem 'rspec-example_steps'
+
 ### Example
 
     require 'rspec/example_steps'
@@ -121,12 +128,12 @@ Simular to Example :pending behavior:
 
       # pass :pending => true option
       Then "I should see welcome", :pending => true do
-	...
+      ...
       end
 
       # pass :pending => "some pending message"
       Then "I should see last login IP", :pending => "WIP" do
-	...
+      ...
       end
     end
 
