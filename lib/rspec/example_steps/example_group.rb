@@ -2,85 +2,30 @@ module RSpec
   module ExampleSteps
     module ExampleGroup
       def include_steps(*args)
-        name = args.shift 
+        name = args.shift
         shared_block = RSpec.world.shared_example_steps[name]
         shared_block or raise ArgumentError, "Could not find shared steps #{name.inspect}"
         instance_exec(*args, &shared_block)
       end
 
-      def Given(message, options = {})
-        RSpec.world.reporter.example_step_started(self, :given, message, options)
-        if block_given? && !options[:pending]
-          begin
-            yield
-          rescue Exception => e
-            RSpec.world.reporter.example_step_failed(self, :given, message, options)
-            raise e
-          end
-          RSpec.world.reporter.example_step_passed(self, :given, message, options)
-        else
-          RSpec.world.reporter.example_step_pending(self, :given, message, options)
-        end
+      def Given(message, options = {}, &block)
+        RSpec.world.reporter.process_example_step(self, :given, message, options, &block)
       end
 
-      def When(message, options = {})
-        RSpec.world.reporter.example_step_started(self, :when, message, options)
-        if block_given? && !options[:pending]
-          begin
-            yield
-          rescue Exception => e
-            RSpec.world.reporter.example_step_failed(self, :when, message, options)
-            raise e
-          end
-          RSpec.world.reporter.example_step_passed(self, :when, message, options)
-        else
-          RSpec.world.reporter.example_step_pending(self, :when, message, options)
-        end
+      def When(message, options = {}, &block)
+        RSpec.world.reporter.process_example_step(self, :when, message, options, &block)
       end
 
-      def Then(message, options = {})
-        RSpec.world.reporter.example_step_started(self, :then, message, options)
-        if block_given? && !options[:pending]
-          begin
-            yield
-          rescue Exception => e
-            RSpec.world.reporter.example_step_failed(self, :then, message, options)
-            raise e
-          end
-          RSpec.world.reporter.example_step_passed(self, :then, message, options)
-        else
-          RSpec.world.reporter.example_step_pending(self, :then, message, options)
-        end
+      def Then(message, options = {}, &block)
+        RSpec.world.reporter.process_example_step(self, :then, message, options, &block)
       end
 
-      def And(message, options = {})
-        RSpec.world.reporter.example_step_started(self, :and, message, options)
-        if block_given? && !options[:pending]
-          begin
-            yield
-          rescue Exception => e
-            RSpec.world.reporter.example_step_failed(self, :and, message, options)
-            raise e
-          end
-          RSpec.world.reporter.example_step_passed(self, :and, message, options)
-        else
-          RSpec.world.reporter.example_step_pending(self, :and, message, options)
-        end
+      def And(message, options = {}, &block)
+        RSpec.world.reporter.process_example_step(self, :and, message, options, &block)
       end
 
-      def But(message, options = {})
-        RSpec.world.reporter.example_step_started(self, :but, message, options)
-        if block_given? && !options[:pending]
-          begin
-            yield
-          rescue Exception => e
-            RSpec.world.reporter.example_step_failed(self, :but, message, options)
-            raise e
-          end
-          RSpec.world.reporter.example_step_passed(self, :but, message, options)
-        else
-          RSpec.world.reporter.example_step_pending(self, :but, message, options)
-        end
+      def But(message, options = {}, &block)
+        RSpec.world.reporter.process_example_step(self, :but, message, options, &block)
       end
 
     end

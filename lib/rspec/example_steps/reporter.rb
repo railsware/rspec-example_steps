@@ -1,6 +1,22 @@
 module RSpec
   module ExampleSteps
     module Reporter
+      def process_example_step(example, type, message, options)
+        example_step_started(self, type, message, options)
+
+        if block_given? && !options[:pending]
+          begin
+            yield
+          rescue Exception => e
+            example_step_failed(self, type, message, options)
+            raise e
+          end
+          example_step_passed(self, type, message, options)
+        else
+          example_step_pending(self, type, message, options)
+        end
+      end
+
       def example_step_started(example, type, message, options)
         notify :example_step_started, Notification.new(example, type, message, options)
       end
