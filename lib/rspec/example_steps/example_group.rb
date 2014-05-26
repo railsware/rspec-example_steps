@@ -5,7 +5,7 @@ module RSpec
         name = args.shift 
         shared_block = RSpec.world.shared_example_steps[name]
         shared_block or raise ArgumentError, "Could not find shared steps #{name.inspect}"
-        instance_eval_with_args(*args, &shared_block)
+        instance_exec(*args, &shared_block)
       end
 
       def Given(message, options = {})

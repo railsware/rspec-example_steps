@@ -25,11 +25,11 @@ describe "example steps" do
         @but = "But value"
       end
 
-      @thing.should  == "Given value"
-      @action.should == "When value"
-      @result.should == "Then value"
-      @and.should == "And value"
-      @but.should == "But value"
+      expect(@thing).to eq("Given value")
+      expect(@action).to eq("When value")
+      expect(@result).to eq("Then value")
+      expect(@and).to eq("And value")
+      expect(@but).to eq("But value")
     end
   end
 
@@ -113,7 +113,7 @@ describe "example steps" do
 
     Steps "When fails" do
       When "action" do
-        (2*2).should == 5
+        expect(2*2).to eq(5)
       end
 
       Then "I should see error" do

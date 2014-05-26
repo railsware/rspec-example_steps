@@ -10,7 +10,7 @@ shared_steps "push steps" do
   end
 
   Then "pipe should have data" do
-    pipe.items.should == ["hello"]
+    expect(pipe.items).to eq(["hello"])
   end
 end
 
@@ -26,7 +26,7 @@ shared_steps "pull steps" do
   end
 
   Then "pipe should be empty" do
-    pipe.items.should == []
+    expect(pipe.items).to eq([])
   end
 end
 
@@ -65,14 +65,14 @@ describe "shared steps" do
   Steps "push, count and pull" do
     include_steps "push steps"
     Then "pipe should have 1 item" do
-      pipe.items.size.should == 1
+      expect(pipe.items.size).to eq(1)
     end
     include_steps "pull steps"
   end
 
   Steps "push with arguments and pull" do
     include_steps "push with arguments steps", "hi"
-    pipe.items.should == ["hi"]
+    expect(pipe.items).to eq(["hi"])
     include_steps "pull steps"
   end
 end
