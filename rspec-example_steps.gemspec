@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.email       = ["andriy.yanko@gmail.com"]
   s.homepage    = "https://github.com/railsware/rspec-example_steps"
   s.summary     = %q{Given/When/Then steps for RSpec examples}
+  s.license     = 'MIT'
 
   s.rubyforge_project = "rspec_example_steps"
 
