@@ -7,7 +7,9 @@ Given/When/Then/And/But steps for RSpec examples
 * For rspec v2 use gem v0.2.x or branch rspec2
 * For rspec v3 user gem v3.x.x or master
 
+<pre>
     gem 'rspec-example_steps'
+</pre>
 
 ### Example
 
@@ -136,6 +138,10 @@ Simular to Example :pending behavior:
       ...
       end
     end
+
+## Authors
+
+* [Andriy Yanko](http://ayanko.github.io)
 
 ## License
 
