@@ -27,7 +27,7 @@ module RSpec
         end
 
         def example_passed_with_steps(notification)
-          example_passed_without_steps(notification.example) unless notification.example.metadata[:with_steps]
+          example_passed_without_steps(notification) unless notification.example.metadata[:with_steps]
         end
 
         def example_step_passed(notification)
