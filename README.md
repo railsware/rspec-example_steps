@@ -2,45 +2,59 @@
 
 Given/When/Then/And/But steps for RSpec examples
 
+### Description
+
+This gem brings two major functionality to your `spec/features`
+
+* Verbosity for rspec documentation formatter.
+* Ability to comment or describe set of actions in example into some step.
+
 ### Installation
 
-* For rspec v2 use gem v0.2.x or branch rspec2
-* For rspec v3 user gem v3.x.x or master
+* For rspec v2 use gem **v0.2.x** or rspec2 branch
+* For rspec v3 user gem **v3.x.x** or master branch
 
-<pre>
-    gem 'rspec-example_steps'
-</pre>
+```ruby
+gem 'rspec-example_steps'
+```
+
+Add to `spec/spec_helper.rb`
+
+```ruby
+require 'rspec/example_steps'
+```
 
 ### Example
 
-    require 'rspec/example_steps'
-
-    context "Searching" do
-      Steps "Result found" do
-        Given "I am on search page" do
-          page.visit("/search")
-          page.should have_content("Search")
-        end
-
-        When "I search something" do
-          page.fill_in('Search', :with => 'John')
-          page.click_button "Go"
-        end
-
-        Then "I should see result" do
-          page.should have_content("Result")
-        end
-      end
+```ruby
+context "Searching" do
+  Steps "Result found" do
+    Given "I am on search page" do
+      page.visit("/search")
+      page.should have_content("Search")
     end
+
+    When "I search something" do
+      page.fill_in('Search', :with => 'John')
+      page.click_button "Go"
+    end
+
+    Then "I should see result" do
+      page.should have_content("Result")
+    end
+  end
+end
+```
 
 ### Documentation formatting output:
 
-    Searching
-      User succesfully replaces device
-        Given I am on search page
-        When I search something
-        Then I should see result
-
+<pre>
+Searching
+  User succesfully replaces device
+    Given I am on search page
+    When I search something
+    Then I should see result
+</pre>
 
 ### Shared steps
 
@@ -50,42 +64,44 @@ Shared _steps_ behavior is simular to shared _example_ but context is example no
 
 ### Example with shared steps
 
-    shared_steps "login" do
-      When "I go to login page" do
-        page.visit '/login'
-      end
-      When "I put credentials" do
-        page.fill_in 'Login', :with => 'jack@example.com'
-        page.fill_in 'Password', :with => 'password''
-      end
-      Then "I should be logged in" do
-        page.status_code.should == 200
-        page.should have_content("Welcome jack@example.com")
-      end
-    end
+```ruby
+shared_steps "login" do
+  When "I go to login page" do
+    page.visit '/login'
+  end
+  When "I put credentials" do
+    page.fill_in 'Login', :with => 'jack@example.com'
+    page.fill_in 'Password', :with => 'password''
+  end
+  Then "I should be logged in" do
+    page.status_code.should == 200
+    page.should have_content("Welcome jack@example.com")
+  end
+end
 
-    shared_steps "logout" do
-      page.visit '/logout'
-      page.status_code.should == 200
-    end
+shared_steps "logout" do
+  page.visit '/logout'
+  page.status_code.should == 200
+end
 
-    context "user flow"
-      Steps "User updates profile description" do
-        include_steps "login"
-        When "I update profile description" do
-          ...
-        end
-        include_steps "logout"
-      end
-
-      Steps "User updates profile avatar" do
-        include_steps "login"
-        When "I update profile avatar" do
-          ...
-        end
-        include_steps "logout"
-      end
+context "user flow"
+  Steps "User updates profile description" do
+    include_steps "login"
+    When "I update profile description" do
+      ...
     end
+    include_steps "logout"
+  end
+
+  Steps "User updates profile avatar" do
+    include_steps "login"
+    When "I update profile avatar" do
+      ...
+    end
+    include_steps "logout"
+  end
+end
+```
 
 ### Passing arguments to shared steps
 
@@ -93,51 +109,54 @@ It's possible to customize shared steps. See example
 
 ### Example with shared steps with arguments
 
-    shared_steps "login" do |email, password|
-      When "I go to login page" do
-        page.visit '/login'
-      end
-      When "I put credentials" do
-        page.fill_in 'Login', :with => email
-        page.fill_in 'Password', :with => password
-      end
-    end
+```ruby
+shared_steps "login" do |email, password|
+  When "I go to login page" do
+    page.visit '/login'
+  end
+  When "I put credentials" do
+    page.fill_in 'Login', :with => email
+    page.fill_in 'Password', :with => password
+  end
+end
 
-    shared_steps "invalid login" do
-      Then "I should see login error" do
-      ...
-      end
-    end
+shared_steps "invalid login" do
+  Then "I should see login error" do
+  ...
+  end
+end
 
-    Steps "User provides wrong email" do
-      include_steps "login", 'jack', 'qwerty'
-      include_steps "invalid login"
-    end
+Steps "User provides wrong email" do
+  include_steps "login", 'jack', 'qwerty'
+  include_steps "invalid login"
+end
 
-    Steps "User provides wrong password" do
-      include_steps "login", 'jack@example.com', 'bla'
-      include_steps "invalid login"
-    end
-
+Steps "User provides wrong password" do
+  include_steps "login", 'jack@example.com', 'bla'
+  include_steps "invalid login"
+end
+```
 
 ### Pending steps
 
 Simular to Example :pending behavior:
 
-    Steps "User login" do
-      # just skip block
-      When "I go to login"
+```ruby
+Steps "User login" do
+  # just skip block
+  When "I go to login"
 
-      # pass :pending => true option
-      Then "I should see welcome", :pending => true do
-      ...
-      end
+  # pass :pending => true option
+  Then "I should see welcome", :pending => true do
+  ...
+  end
 
-      # pass :pending => "some pending message"
-      Then "I should see last login IP", :pending => "WIP" do
-      ...
-      end
-    end
+  # pass :pending => "some pending message"
+  Then "I should see last login IP", :pending => "WIP" do
+  ...
+  end
+end
+```
 
 ## Authors
 
