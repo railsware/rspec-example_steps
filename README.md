@@ -26,27 +26,31 @@ require 'rspec/example_steps'
 
 ### Example
 
+`spec/features/search_spec.rb`
+
 ```ruby
-context "Searching" do
-  Steps "Result found" do
-    Given "I am on search page" do
-      page.visit("/search")
-      page.should have_content("Search")
+context 'Searching' do
+  Steps 'Result found' do
+    Given 'I am on search page' do
+      visit '/search'
+      expect(page).to have_content('Search')
     end
 
-    When "I search something" do
-      page.fill_in('Search', :with => 'John')
-      page.click_button "Go"
+    When 'I search something' do
+      fill_in 'Search', with: 'John'
+      click_button 'Go'
     end
 
-    Then "I should see result" do
-      page.should have_content("Result")
+    Then 'I should see result' do
+      expect(page).to have_content('Result')
     end
   end
 end
 ```
 
 ### Documentation formatting output:
+
+`rspec -fd spec/features/search_spec.rb`
 
 <pre>
 Searching
@@ -65,40 +69,39 @@ Shared _steps_ behavior is simular to shared _example_ but context is example no
 ### Example with shared steps
 
 ```ruby
-shared_steps "login" do
-  When "I go to login page" do
-    page.visit '/login'
+shared_steps 'login' do
+  When 'I go to login page' do
+    visit '/login'
   end
-  When "I put credentials" do
-    page.fill_in 'Login', :with => 'jack@example.com'
-    page.fill_in 'Password', :with => 'password''
+  When 'I put credentials' do
+    fill_in 'Login', with: 'jack@example.com'
+    fill_in 'Password', with: 'password'
   end
-  Then "I should be logged in" do
-    page.status_code.should == 200
-    page.should have_content("Welcome jack@example.com")
+  Then 'I should be logged in' do
+    expect(page).to have_content('Welcome jack@example.com')
   end
 end
 
-shared_steps "logout" do
-  page.visit '/logout'
-  page.status_code.should == 200
+shared_steps 'logout' do
+  visit '/logout'
+  expect(page.status_code).to eq(200)
 end
 
-context "user flow"
-  Steps "User updates profile description" do
-    include_steps "login"
-    When "I update profile description" do
+context 'user flow'
+  Steps 'User updates profile description' do
+    include_steps 'login'
+    When 'I update profile description' do
       ...
     end
-    include_steps "logout"
+    include_steps 'logout'
   end
 
-  Steps "User updates profile avatar" do
-    include_steps "login"
-    When "I update profile avatar" do
+  Steps 'User updates profile avatar' do
+    include_steps 'login'
+    When 'I update profile avatar' do
       ...
     end
-    include_steps "logout"
+    include_steps 'logout'
   end
 end
 ```
@@ -110,30 +113,30 @@ It's possible to customize shared steps. See example
 ### Example with shared steps with arguments
 
 ```ruby
-shared_steps "login" do |email, password|
-  When "I go to login page" do
+shared_steps 'login' do |email, password|
+  When 'I go to login page' do
     page.visit '/login'
   end
-  When "I put credentials" do
-    page.fill_in 'Login', :with => email
-    page.fill_in 'Password', :with => password
+  When 'I put credentials' do
+    fill_in 'Login', with: email
+    fill_in 'Password', with: password
   end
 end
 
-shared_steps "invalid login" do
-  Then "I should see login error" do
+shared_steps 'invalid login' do
+  Then 'I should see login error' do
   ...
   end
 end
 
-Steps "User provides wrong email" do
-  include_steps "login", 'jack', 'qwerty'
-  include_steps "invalid login"
+Steps 'User provides wrong email' do
+  include_steps 'login', 'jack', 'qwerty'
+  include_steps 'invalid login'
 end
 
-Steps "User provides wrong password" do
-  include_steps "login", 'jack@example.com', 'bla'
-  include_steps "invalid login"
+Steps 'User provides wrong password' do
+  include_steps 'login', 'jack@example.com', 'bla'
+  include_steps 'invalid login'
 end
 ```
 
@@ -142,17 +145,17 @@ end
 Simular to Example :pending behavior:
 
 ```ruby
-Steps "User login" do
+Steps 'User login' do
   # just skip block
-  When "I go to login"
+  When 'I go to login'
 
-  # pass :pending => true option
-  Then "I should see welcome", :pending => true do
+  # pass pending: true option
+  Then 'I should see welcome', pending: true do
   ...
   end
 
-  # pass :pending => "some pending message"
-  Then "I should see last login IP", :pending => "WIP" do
+  # pass pending: 'some pending message'
+  Then 'I should see last login IP', pending: 'WIP' do
   ...
   end
 end
