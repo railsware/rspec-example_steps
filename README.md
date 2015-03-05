@@ -12,7 +12,7 @@ This gem brings two major functionality to your `spec/features`
 ### Installation
 
 * For rspec v2 use gem **v0.2.x** or rspec2 branch
-* For rspec v3 user gem **v3.x.x** or master branch
+* For rspec v3 use gem **v3.x.x** or master branch
 
 ```ruby
 gem 'rspec-example_steps'
