@@ -23,6 +23,3 @@ if formatter = RSpec.world.reporter.find_registered_formatter(RSpec::Core::Forma
  RSpec.world.reporter.register_listener formatter,
    :example_started, :example_step_passed, :example_step_pending, :example_step_failed
 end
-
-require 'rspec/example_steps/shared_steps'
-include RSpec::ExampleSteps::SharedSteps
